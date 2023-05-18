@@ -1,18 +1,41 @@
 public class Verificar {
-    private String opMat;
-    char[] opmatArray = opMat.toCharArray();
+    char[] opmatArray;
     private Pilha<Character> pnova = new Pilha<>();
-    private Pilha<Character> pvelha = new Pilha<>();
-    public String getOpMat() {
-        return opMat;
-    }
-    public void setOpMat(String opMat) {
-        this.opMat = opMat;
-    }
     //transformando a array em uma pilha
-    for(int i=0; i<opmatArray.length-1; i++){
-        pnova.push(opmatArray[i]);
+    public Pilha<Character> transforPilha(String opMat){
+        opmatArray = opMat.toCharArray();
+        for(int i=0; i<opmatArray.length-1; i++){
+            pnova.push(opmatArray[i]);
+        }
+        return pnova;
     }
-
+    public boolean isNum(){
+        if (pnova.top() == '0' || pnova.top()=='1' || pnova.top()=='2' || pnova.top()=='3' || pnova.top()=='4' || pnova.top()=='5' || pnova.top()=='6' || pnova.top()=='7' || pnova.top()=='8' || pnova.top()=='9'){
+            pnova.pop();
+            isNum();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public boolean isOp(){
+        if(pnova.top() == '*' || pnova.top() == '/' || pnova.top() == '+' || pnova.top() == '-'){
+            pnova.pop();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public void mostrar(Pilha<Character> pnova){
+        System.out.println(pnova.top());
+    }
+    
+    //verificar se a equacao matematica atende aos padroes
+    
 }
-
+//65+98
+//(56+56)
+//65+(65-98)
+//(56+89
