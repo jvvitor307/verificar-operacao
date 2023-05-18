@@ -1,6 +1,9 @@
 public class Verificar {
     char[] opmatArray;
     private Pilha<Character> pnova = new Pilha<>();
+    private Pilha<Character> pveia = new Pilha<>();
+    private int aberto = 0;
+    private int fechado = 0;
     //transformando a array em uma pilha
     public Pilha<Character> transforPilha(String opMat){
         opmatArray = opMat.toCharArray();
@@ -12,7 +15,6 @@ public class Verificar {
     public boolean isNum(){
         if (pnova.top() == '0' || pnova.top()=='1' || pnova.top()=='2' || pnova.top()=='3' || pnova.top()=='4' || pnova.top()=='5' || pnova.top()=='6' || pnova.top()=='7' || pnova.top()=='8' || pnova.top()=='9'){
             pnova.pop();
-            isNum();
             return true;
         }
         else{
@@ -28,12 +30,46 @@ public class Verificar {
             return false;
         }
     }
+    public boolean ParOk(){
+        for(int i = 0; pnova.size()+i==i; i++){
+            if(pnova.top()=='('){
+                aberto++;
+            }
+            else if(pnova.top()==')'){
+                fechado++;
+                
+            }
+            pveia.push(pnova.pop());
+        }
+        while(!pveia.isEmpty()){
+            pnova.push(pveia.pop());
+        }
+        if(fechado == aberto){
+            return true;
+        }
+        else{
+            System.out.println("esta faltando parenteses");
+            return false;
+        }
+    }
+       
+
+    }
     public void mostrar(Pilha<Character> pnova){
         System.out.println(pnova.top());
     }
     
     //verificar se a equacao matematica atende aos padroes
+    public boolean isEqu(){
+        if(ParOk()){
+            if(pnova.top() == '+' || pnova.top() == '-' || isNum()){
+                if(pnova.top() == '+' || pnova.top() == '-'){
+                    
+                }
+            }
+        }
     
+    }
 }
 //65+98
 //(56+56)
