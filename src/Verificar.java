@@ -4,6 +4,7 @@ public class Verificar {
     private Pilha<Character> pveia = new Pilha<>();
     private int aberto = 0;
     private int fechado = 0;
+    private Character op;
     //transformando a array em uma pilha
     public Pilha<Character> transforPilha(String opMat){
         opmatArray = opMat.toCharArray();
@@ -12,7 +13,7 @@ public class Verificar {
         }
         return pnova;
     }
-    public boolean isNum(){
+    public boolean isNum(Pilha<Character> pnova){
         if (pnova.top() == '0' || pnova.top()=='1' || pnova.top()=='2' || pnova.top()=='3' || pnova.top()=='4' || pnova.top()=='5' || pnova.top()=='6' || pnova.top()=='7' || pnova.top()=='8' || pnova.top()=='9'){
             pnova.pop();
             return true;
@@ -21,16 +22,23 @@ public class Verificar {
             return false;
         }
     }
-    public boolean isOp(){
-        if(pnova.top() == '*' || pnova.top() == '/' || pnova.top() == '+' || pnova.top() == '-'){
-            pnova.pop();
+    public boolean isOp(Pilha<Character> pnova){
+        if(pnova.top() == '*' || pnova.top() == '/' || pnova.top() == '+' || pnova.top() == '-' || pnova.top() == '(' || pnova.top() == ')'){
             return true;
         }
         else{
             return false;
         }
     }
-    public boolean ParOk(){
+    public boolean isPar(Pilha<Character> pnova, Character op){
+        if(op == ')'){
+            pnova.pop();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean ParOk(Pilha<Character> pnova){
         for(int i = 0; pnova.size()+i==i; i++){
             if(pnova.top()=='('){
                 aberto++;
@@ -53,23 +61,79 @@ public class Verificar {
         }
     }
        
-
-    }
     public void mostrar(Pilha<Character> pnova){
         System.out.println(pnova.top());
     }
     
     //verificar se a equacao matematica atende aos padroes
-    public boolean isEqu(){
-        if(ParOk()){
-            if(pnova.top() == '+' || pnova.top() == '-' || isNum()){
-                if(pnova.top() == '+' || pnova.top() == '-'){
-                    
-                }
+    public boolean meioCerto(Pilha<Character> pnova){
+        if(pnova.top() == '+' || pnova.top() == '-'){
+            if(isNum(pnova)){
+                return meioOk(pnova);
             }
+            else{
+                return false;
+            }
+        }
+        else if(isNum(pnova)){
+            return meioOk(pnova);
+        }
+        else{
+            return false;
         }
     
     }
+    public boolean meioOk(Pilha<Character> pnova){
+        while(isNum(pnova)){
+            if(pnova.isEmpty()){
+                return true;
+            }
+        }
+        while(!isNum(pnova) && !pnova.isEmpty()){
+            if(isOp(pnova)){
+                op = pnova.pop();
+                if(isNum(pnova)){
+                    if(pnova.isEmpty()){
+                        return true;
+                    }
+                    else{
+                        meioOk(pnova);
+                    }
+                }
+                else if(isPar(pnova, op) && pnova.isEmpty()){
+                    return true;
+                }
+                else if(isPar(pnova, op) && isOp(pnova)){
+                pnova.pop();
+                if(isNum(pnova)){
+                    if(pnova.isEmpty()){
+                        return true;
+                    }
+                    else{
+                        meioOk(pnova);
+                    }
+                }
+                }
+
+                else{
+                    return false;
+                }
+            }
+            else{
+                return false;
+            }
+        } 
+        return false;   
+    }
+    public void certo(Pilha<Character> pnova){
+        if(meioCerto(pnova) && meioOk(pnova)){
+            System.out.println("ta certo");
+        }
+        else{
+            System.out.println("ta errado");
+        }
+    }
+
 }
 //65+98
 //(56+56)
