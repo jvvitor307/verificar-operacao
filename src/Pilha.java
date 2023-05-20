@@ -29,15 +29,28 @@ public class Pilha<T> {
         return lista.isEmpty();
     }
 
-    public T top() {
+    public T top(){
         if (isEmpty()) {
-            System.out.println("A pilha está vazia.");
+            System.out.println("a pilha esta vazia");
             return null;
         }
-        return lista.get(lista.size() - 1);
+        else{
+            return lista.get(lista.size() - 1);
+        }
     }
+    
 
     public void clear() {
-        lista.clear();
+        if(lista.isEmpty()){
+            while(!lista.isEmpty()){
+                if (isEmpty()) {
+                    System.out.println("A pilha está vazia.");
+                }
+                lista.remove(lista.size() - 1);
+            }
+        }
+        else{
+            System.out.println("A pilha está vazia.");
+        }
     }
 }
